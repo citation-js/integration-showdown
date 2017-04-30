@@ -1,0 +1,22 @@
+{
+  "name": "citation-js-showdown",
+  "version": "1.0.0",
+  "description": "Cite references in Showdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/larsgw/citation.js-showdown.git"
+  },
+  "author": "Lars Willighagen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/larsgw/citation.js-showdown/issues"
+  },
+  "homepage": "https://github.com/larsgw/citation.js-showdown#readme",
+  "dependencies": {
+    "citation-js": "^0.3.0-3"
+  }
+}
