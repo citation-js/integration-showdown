@@ -2,9 +2,11 @@
   "name": "citation-js-showdown",
   "version": "1.0.0",
   "description": "Cite references in Showdown",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard \"src/**/*.js\" \"test/**/*.js\"",
+    "test": "npm run lint",
+    "build": "babel src -d lib"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,21 @@
   },
   "homepage": "https://github.com/larsgw/citation.js-showdown#readme",
   "dependencies": {
-    "citation-js": "^0.3.0-3"
+    "citation-js": ">=0.3.0-4",
+    "showdown": "^1.6.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "standard": "^10.0.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
   }
 }
