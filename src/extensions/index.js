@@ -1,4 +1,5 @@
 import auto from './auto/index'
-import manual from './manual/index'
+// import manual from './manual/index'
 
-export { auto, manual }
+export { auto }
+// export { auto, manual }

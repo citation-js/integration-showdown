@@ -104,7 +104,6 @@ export default (input) => {
   const refFactory = getRef(getId())
   const citations = new Cite([], options)
 
-  console.log(0, matches)
   matches.forEach(function ({startIndex, endIndex, text}) {
     const refs = []
 
@@ -118,5 +117,7 @@ export default (input) => {
     input = `${input.substr(0, startIndex + 1)}${refs.join(' ')}${input.substr(endIndex - 1)}`
   })
 
-  return `${input}${citations.get()}`
+  const bibliography = citations.get().replace(/(\n|<br\s*\/?>)\s*/g, '')
+
+  return `${input}${bibliography}`
 }
