@@ -1,6 +1,7 @@
 # citation.js-showdown
 
-[Showdown](https://github.com/showdownjs/showdown) extension for [Citation.js](https://github.com/larsgw/citation.js). Browser support coming soon.
+[Showdown](https://github.com/showdownjs/showdown) extension for [Citation.js](https://github.com/larsgw/citation.js). Browser
+support coming soon.
 
 ## Install
 
@@ -27,11 +28,31 @@ require('citation-js-showdown')
 Third, use extension in the showdown converter:
 
 ```js
-const Showdown = require('showdown')
+const converter = new Showdown.Converter({ extensions: ['citation.js'] })
 ```
+
+Now you can use the converter like you normally would.
 
 ## Syntax
 
     ^[<INPUT>]
 
-Where `<INPUT>` is any string that can be inputted to [`Cite`](https://github.com/larsgw/citation.js#citation.cite), omitting the quotes.
+Where `<INPUT>` is any string that can be inputted to [`Cite`](https://github.com/larsgw/citation.js#citation.cite), omitting
+the quotes. Arrays may not work currently, see todos.
+
+## Todo
+
+* Add tests
+    * fix problems based on findings
+* Fix issue with output conflicting with showdown.
+* Sorting based on IDs
+* Included webpacked file for browsers
+* Add support for `^[<AUTHOR>, <YEAR>, <TITLE>, <ETC>]` syntax
+* DOI input (actually a [todo for Citation.js](https://github.com/larsgw/citation.js/issues/25);
+  if support for DOI is added there, it will automatically work here, assuming I update the dependencies)
+* Work async (Citation.js will probably be at least partly async soon). Requires either:
+    * a hack in whatever program you're rendering the HTML in; or
+    * [async support in showdown](https://github.com/showdownjs/showdown/issues/322)
+* Configuration
+    * output options available in Citation.js (assuming we want formatted citations that's only style and language)
+    * Wikipedia-style references (i.e. <sup>[1]</sup>) or following style guides (i.e. (Willighagen, 2017))

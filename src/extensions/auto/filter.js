@@ -117,7 +117,7 @@ export default (input) => {
     input = `${input.substr(0, startIndex + 1)}${refs.join(' ')}${input.substr(endIndex - 1)}`
   })
 
-  const bibliography = citations.get().replace(/(\n|<br\s*\/?>)\s*/g, '')
+  const bibliography = citations.get()
 
   return `${input}${bibliography}`
 }
