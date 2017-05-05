@@ -1,7 +1,6 @@
 # citation.js-showdown
 
-[Showdown](https://github.com/showdownjs/showdown) extension for [Citation.js](https://github.com/larsgw/citation.js). Browser
-support coming soon.
+[Showdown](https://github.com/showdownjs/showdown) extension for [Citation.js](https://github.com/larsgw/citation.js).
 
 [![NPM version](https://img.shields.io/npm/v/citation-js-showdown.svg)](https://npmjs.org/citation-js-showdown)
 [![NPM total downloads](https://img.shields.io/npm/dt/citation-js-showdown.svg)](https://npmjs.org/citation-js-showdown)
@@ -62,11 +61,7 @@ the quotes. Arrays may not work currently, see todos.
 
 ## Todo
 
-* Add tests
-    * fix problems based on findings
-* Fix issue with output conflicting with showdown.
 * Sorting based on IDs
-* Included webpacked file for browsers
 * Add support for `^[<AUTHOR>, <YEAR>, <TITLE>, <ETC>]` syntax
 * DOI input (actually a [todo for Citation.js](https://github.com/larsgw/citation.js/issues/25);
   if support for DOI is added there, it will automatically work here, assuming I update the dependencies)
