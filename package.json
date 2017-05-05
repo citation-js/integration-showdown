@@ -1,6 +1,6 @@
 {
   "name": "citation-js-showdown",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Cite references in Showdown",
   "main": "lib/index.js",
   "scripts": {
