@@ -8,12 +8,14 @@ const options = {
 
 const parse = {
   start: {
-    re: /^\W\^\[/,
-    len: 3
+    re: /^\^\[/,
+    len: 2,
+    diff: 0
   },
   end: {
-    re: /^\]\W/,
-    len: 2
+    re: /^\]/,
+    len: 1,
+    diff: 0
   },
   string: {
     re: /^"/,
@@ -41,26 +43,25 @@ const matchText = (text) => {
     if (parse.start.re.test(text.slice(index, index + parse.start.len))) {
       let match = {}
       match.startIndex = index
-
       index += parse.start.len
+
+      let string = false
+      let bracket = 0
       while (index <= lastIndex) {
-        let string = false
-        let bracket = 0
-
-        if (text[index - 1] !== '\\') {
-          if (parse.string.re.test(text.slice(index, index + parse.string.len))) {
-            string = !string
-          } else if (!string && parse.bracket.open.re.test(text.slice(index, index + parse.bracket.open.len))) {
-            bracket++
-          } else if (!string && parse.bracket.close.re.test(text.slice(index, index + parse.bracket.close.len))) {
-            bracket--
-          }
-        }
-
-        if (!string && bracket < 0 && parse.end.re.test(text.slice(index, index + parse.end.len))) {
+        if (!string && bracket <= 0 && parse.end.re.test(text.slice(index, index + parse.end.len))) {
           index += parse.end.len
           match.endIndex = index
           break
+        }
+
+        if (text[index - 1] !== '\\') {
+          if (!string && parse.bracket.open.re.test(text.slice(index, index + parse.bracket.open.len))) {
+            bracket++
+          } else if (!string && bracket > 0 && parse.bracket.close.re.test(text.slice(index, index + parse.bracket.close.len))) {
+            bracket--
+          } else if (parse.string.re.test(text.slice(index, index + parse.string.len))) {
+            string = !string
+          }
         }
 
         index++
@@ -104,20 +105,24 @@ export default (input) => {
   const refFactory = getRef(getId())
   const citations = new Cite([], options)
 
-  matches.forEach(function ({startIndex, endIndex, text}) {
-    const refs = []
+  let refs = []
+  matches.forEach(function ({text}) {
+    const localRefs = []
 
     citations.add(Cite.parse.input.chain(text).map((entry) => {
       const {ref, id} = refFactory.next().value
-      refs.push(ref)
+      localRefs.push(ref)
       entry.id = id
       return entry
     }))
 
-    input = `${input.substr(0, startIndex + 1)}${refs.join(' ')}${input.substr(endIndex - 1)}`
+    refs = refs.concat(localRefs)
+  })
+  matches.reverse().forEach(function ({startIndex, endIndex}) {
+    input = `${input.substr(0, startIndex + parse.start.diff)}${refs.pop()}${input.substr(endIndex - parse.end.diff)}`
   })
 
-  const bibliography = citations.get()
+  const bibliography = citations.get().replace(/(<br\s*\/?>)/g, '')
 
   return `${input}${bibliography}`
 }
