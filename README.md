@@ -3,6 +3,10 @@
 [Showdown](https://github.com/showdownjs/showdown) extension for [Citation.js](https://github.com/larsgw/citation.js). Browser
 support coming soon.
 
+[![NPM version](https://img.shields.io/npm/v/citation-js-showdown.svg)](https://npmjs.org/citation-js-showdown)
+[![NPM total downloads](https://img.shields.io/npm/dt/citation-js-showdown.svg)](https://npmjs.org/citation-js-showdown)
+[![Build Status](https://travis-ci.org/larsgw/citation.js-showdown.svg?branch=master)](https://travis-ci.org/larsgw/citation.js-showdown)
+
 ## Install
 
 ### Node.js
