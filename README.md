@@ -9,6 +9,10 @@ support coming soon.
 
     npm install citation-js-showdown
 
+### Browser
+
+Download [this file](https://github.com/larsgw/citation.js-showdown/blob/master/build/showdown.citation.js).
+
 ## Use
 
 ### Node.js
@@ -29,6 +33,18 @@ Third, use extension in the showdown converter:
 
 ```js
 const converter = new Showdown.Converter({ extensions: ['citation.js'] })
+```
+
+Now you can use the converter like you normally would.
+
+### Browser
+
+```html
+<script src="showdown.js"></script>
+<script src="showdown.citation.js"></script>
+<script>
+  const converter = new Showdown.Converter({ extensions: ['citation.js'] })
+</script>
 ```
 
 Now you can use the converter like you normally would.
