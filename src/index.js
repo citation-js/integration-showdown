@@ -1,31 +1,42 @@
-/* global define:false, module, showdown */
+import extension from './filter'
+import { plugins, util } from '@citation-js/core'
 
-import 'babel-core/register'
-import 'babel-polyfill'
-import * as Extensions from './extensions/index'
+module.exports = function (showdown, options) {
+  const { templates, locales } = plugins.config.get('@csl')
+  options = { ...options }
 
-const extensions = () => Object.values(Extensions)
-
-;(function (extension) {
-  'use strict'
-
-  // UML - Universal Module Loader
-  // This enables the extension to be loaded in different environments
-  if (typeof showdown !== 'undefined') {
-    // global (browser or nodejs global)
-    extension(showdown)
-  } else if (typeof define === 'function' && define.amd) {
-    // AMD
-    define(['showdown'], extension)
-  } else if (typeof exports === 'object') {
-    // Node, CommonJS-like
-    module.exports = extension(require('showdown'))
-  } else {
-    // showdown was not found so we throw
-    throw Error('Could not find showdown library')
+  if (options.template && !templates.has(options.template)) {
+    try {
+      templates.add(options.template, util.fetchFile(
+        `https://cdn.jsdelivr.net/gh/citation-style-language/styles@master/${options.template}.csl`
+      ))
+    } catch (e) {}
   }
-})(function (showdown) {
-  'use strict'
 
-  showdown.extension('citation.js', extensions)
-})
+  if (options.lang && !locales.has(options.lang)) {
+    try {
+      locales.add(options.lang, util.fetchFile(
+        `https://cdn.jsdelivr.net/gh/citation-style-language/locales@master/locales-${options.lang}.xml`
+      ))
+    } catch (e) {}
+  }
+
+  if (options.references) {
+    if (!plugins.has('@bibtex')) {
+      console.error('Error: the `references` option is not available without @citation-js/plugin-bibtex')
+    }
+
+    options.references = plugins.input.chain(options.references, {
+      forceType: '@bibtex/text',
+      generateGraph: false
+    }).reduce((cache, reference) => {
+      cache[reference['citation-label']] = reference
+      return cache
+    }, {})
+  }
+
+  const oldFilter = extension.filter
+  extension.filter = input => oldFilter(input, options)
+
+  showdown.extension('citation.js', () => [extension])
+}
