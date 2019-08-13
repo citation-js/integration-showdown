@@ -52,7 +52,7 @@ function filter (input, options) {
 
   const [{ bibstart, bibend }, bibliography] = engine.makeBibliography()
 
-  input += ['', bibstart, ...bibliography, bibend].join('\n')
+  input += ['\n', bibstart, bibliography.join(''), bibend].join('')
 
   return input
 }

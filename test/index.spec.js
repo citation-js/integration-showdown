@@ -98,7 +98,7 @@ const output = fs.readFileSync(path.join(__dirname, '/out.html'), 'utf8')
 
 describe('filter', () => {
   it('works', () => {
-    const test = converter.makeHtml(input)
+    const test = converter.makeHtml(input) + '\n'
     assert.equal(test, output)
   })
 })
