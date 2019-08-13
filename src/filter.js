@@ -32,13 +32,13 @@ function filter (input, options) {
   const citations = Object.fromEntries(clusters.flatMap((refs, noteIndex) => {
     const citationID = getId('citation')
 
-    const [_, cluster] = engine.processCitationCluster({
+    const cluster = engine.processCitationCluster({
       properties: { noteIndex },
       citationItems: refs.map(ref => ({
         id: store.refs[ref].id
       })),
       citationID
-    }, context.pre, context.post)
+    }, context.pre, context.post)[1]
 
     context.pre.push([citationID, noteIndex])
 
