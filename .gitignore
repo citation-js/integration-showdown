@@ -1,5 +1,3 @@
 node_modules/
-npm-debug.log
-dev/
-src/extensions/manual/
-lib/extensions/manual/
+lib/
+build/
