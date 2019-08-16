@@ -34,8 +34,7 @@
     "@citation-js/core": "^0.4.8",
     "@citation-js/plugin-bibtex": "^0.4.8",
     "@citation-js/plugin-csl": "^0.4.8",
-    "browserify": "^16.5.0",
-    "mocha": "^6.2.0",
+    "mocha": "^6.1.4",
     "showdown": "^1.9.0",
     "standard": "^13.1.0"
   },
