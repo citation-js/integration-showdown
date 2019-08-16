@@ -4,7 +4,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/citation-js-showdown.svg)](https://npmjs.org/citation-js-showdown)
 [![NPM total downloads](https://img.shields.io/npm/dt/citation-js-showdown.svg)](https://npmjs.org/citation-js-showdown)
-[![Build Status](https://travis-ci.org/larsgw/citation.js-showdown.svg?branch=master)](https://travis-ci.org/larsgw/citation.js-showdown)
+[![Build Status](https://travis-ci.org/citation-js/integration-showdown.svg?branch=master)](https://travis-ci.org/citation-js/integration-showdown)
 
 ## Install
 
@@ -18,56 +18,41 @@ Download [this file](https://github.com/larsgw/citation.js-showdown/blob/master/
 
 ## Use
 
-### Node.js
-
-First, load showdown:
+First, load showdown and the required plugins:
 
 ```js
-const Showdown = require('showdown')
+const showdown = require('showdown')
+
+// Citation.js plugins
+require('@citation-js/plugin-csl')
+require('@citation-js/plugin-bibtex') // see below
 ```
 
-Second, register extension:
+Second, register the extension:
 
 ```js
-require('citation-js-showdown')
+require('citation-js-showdown')(showdown, options)
 ```
 
 Third, use extension in the showdown converter:
 
 ```js
-const converter = new Showdown.Converter({ extensions: ['citation.js'] })
+const converter = new showdown.Converter({ extensions: ['citation.js'] })
 ```
 
 Now you can use the converter like you normally would.
 
-### Browser
+### Options
 
-```html
-<script src="showdown.js"></script>
-<script src="showdown.citation.js"></script>
-<script>
-  const converter = new Showdown.Converter({ extensions: ['citation.js'] })
-</script>
-```
+  - `template` (optional `String`): a CSL style name
+  - `locale` (optional `String`): a CSL locale language
+  - `references` (optional `String`): BibTeX file contents to cite by label in your document (requires the `@citation-js/plugin-bibtex` plugin)
 
-Now you can use the converter like you normally would.
+### Syntax
 
-## Syntax
+    ^[input]
 
-    ^[<INPUT>]
+Where `input` is any string that can be inputted to [`Cite`](https://github.com/larsgw/citation.js#citation.cite). Any appended sequence of `[input]` is allowed to for additional citations in the same cluster. Example:
 
-Where `<INPUT>` is any string that can be inputted to [`Cite`](https://github.com/larsgw/citation.js#citation.cite), omitting
-the quotes. Arrays may not work currently, see todos.
-
-## Todo
-
-* Sorting based on IDs
-* Add support for `^[<AUTHOR>, <YEAR>, <TITLE>, <ETC>]` syntax
-* DOI input (actually a [todo for Citation.js](https://github.com/larsgw/citation.js/issues/25);
-  if support for DOI is added there, it will automatically work here, assuming I update the dependencies)
-* Work async (Citation.js will probably be at least partly async soon). Requires either:
-    * a hack in whatever program you're rendering the HTML in; or
-    * [async support in showdown](https://github.com/showdownjs/showdown/issues/322)
-* Configuration
-    * output options available in Citation.js (assuming we want formatted citations that's only style and language)
-    * Wikipedia-style references (i.e. <sup>[1]</sup>) or following style guides (i.e. (Willighagen, 2017))
+    That also allows the analysis and visualisation of how research
+    cites each other ^[shotton_publishing_2013][eck_citnetexplorer_2014]
