@@ -23,6 +23,9 @@
     "url": "https://github.com/citation-js/integration-showdown/issues"
   },
   "homepage": "https://github.com/citation-js/integration-showdown#readme",
+  "engines": {
+    "node": ">=8"
+  },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1"
   },
